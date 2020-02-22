@@ -1,20 +1,13 @@
 import cv2
+import os
 
-cap = cv2.VideoCapture(0)
+baseDir = os.getcwd()
+sampleDir = os.path.join(baseDir, os.pardir, "sample")
 
-cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+frame = cv2.imread(os.path.join(sampleDir, "test_image.png"))
+frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-while True :
-    ret, frame = cap.read()
-    frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+laplacian = cv2.Laplacian(frame_gray, cv2.CV_8U, ksize=3)
 
-    laplacian = cv2.Laplacian(frame_gray, cv2.CV_8U, ksize=3)
+cv2.imwrite("laplacian.png", laplacian)
 
-    cv2.imshow("laplacian", laplacian)
-
-    cv2.imshow("VideoFrame", frame)
-    if cv2.waitKey(1) > 0: break
-
-cap.release()
-cv2.destroyAllWindows()
