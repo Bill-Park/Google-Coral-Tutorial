@@ -1,0 +1,7 @@
+# image files
+*.jpg
+*.png
+
+
+# temporary swap file
+*.swo
