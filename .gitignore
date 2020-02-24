@@ -5,3 +5,11 @@
 
 # temporary swap file
 *.swo
+*.swp
+
+# python
+__pycache__
+
+# model file
+models/
+
