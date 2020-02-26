@@ -16,5 +16,6 @@ img_sobel_y = cv2.convertScaleAbs(img_sobel_y)
 img_sobel = cv2.addWeighted(img_sobel_x, 1, img_sobel_y, 1, 0)
 
 cv2.imwrite("input.png", frame)
+cv2.imwrite("gray.png", frame_gray)
 cv2.imwrite("sobel.png", img_sobel)
 

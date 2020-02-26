@@ -7,10 +7,10 @@ haarDir = os.path.join(baseDir, os.pardir, "haar", "data", "haarcascades")
 
 faceCascade = cv2.CascadeClassifier(os.path.join(haarDir, "haarcascade_frontalface_default.xml"))
 
-frame = cv2.imread(os.path.join(sampleDir, "test_image.png"))
+frame = cv2.imread(os.path.join(sampleDir, "group_face.jpg"))
 frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-faces = faceCascade.detectMultiScale(frame_gray, 1.3, 5)
+faces = faceCascade.detectMultiScale(frame_gray, 1.2, 7)
 print(faces)
 
 for (x,y,w,h) in faces :
