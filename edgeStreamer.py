@@ -4,6 +4,7 @@ import numpy as np
 from edgetpu.classification.engine import ClassificationEngine
 import os
 from PIL import Image
+import time
 
 modelPath = os.path.join(os.getcwd(), "ml", "models", "model_edgetpu.tflite")
 
@@ -16,8 +17,15 @@ def index() :
 def get_frame() :
     cap = cv2.VideoCapture(0)
     engine = ClassificationEngine(modelPath)
+    prevTime = 0
     while True :
         _, frame = cap.read()
+        curTime = time.time()
+        sec = curTime - prevTime
+        prevTime = curTime
+        fps = 1 / (sec)
+        fpsText = "FPS : {:.2f}".format(fps)
+
         frameRGB = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         framePIL = Image.fromarray(frameRGB)
         classify = engine.classify_with_image(framePIL)
@@ -35,7 +43,8 @@ def get_frame() :
         print(labelText, score)
 
         cv2.putText(frame, labelText + " " + str(score), (0, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
-
+        
+        cv2.putText(frame, fpsText, (0, 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
         imgencode = cv2.imencode('.jpg', frame)[1]
         stringData = imgencode.tostring()
         yield (b'--frame\r\n'
